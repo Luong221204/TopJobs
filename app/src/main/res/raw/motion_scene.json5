@@ -1,0 +1,115 @@
+{
+  ConstraintSets: {
+    start: {
+      imageView: {
+        alpha: 1,
+        width: 'spread',
+        height: 380,
+        start: ['parent', 'start'],
+        top: ['parent', 'top'],
+        end: ['parent', 'end', 0],
+        custom: {
+          background: '#08ff04'
+        }
+      },
+
+      nested: {
+        width: 'spread',
+        height: 'spread',
+        top: ['imageView', 'bottom',20],
+        bottom: ['parent', 'bottom'],
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+      },
+      avatar: {
+        width: 120,
+        height: 120,
+        start: ['imageView', 'start'],
+        end: ['imageView', 'end', 0],
+        top: ['name', 'bottom', 24],
+      },
+      name: {
+        width: 200 ,
+        height: 50,
+        start: ['parent', 'start'],
+        top: ['parent', 'top', 54],
+        end: ['parent', 'end', 0],
+        custom: {
+          textSize: { type: "float", value: 90 }
+        }
+      },
+      bio: {
+        start: ['parent', 'start'],
+        top: ['avatar', 'bottom', 16],
+        end: ['parent', 'end', 0],
+      },
+      social: {
+        start: ['parent', 'start'],
+        top: ['bio', 'bottom', 16],
+        end: ['parent', 'end', 0]
+      }
+    },
+    end: {
+      imageView: {
+        alpha: 0,
+        width: 'spread',
+        height: 1,
+        start: ['parent', 'start'],
+        end: ['parent', 'end', 0],
+        top: ['parent', 'top'],
+        custom: {
+          background: '#08ff04'
+        }
+      },
+
+      nested: {
+        width: 'spread',
+        height: 'spread',
+        top: ['box', 'bottom',20],
+        bottom: ['parent', 'bottom'],
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+      },
+      avatar: {
+        width: 60,
+        height: 60,
+        start: ['parent', 'start',24],
+        top: ['parent', 'start', 32],
+      },
+      name: {
+        width: 200 ,
+        height: 50,
+        start: ['avatar', 'end',24],
+        top: ['avatar', 'top'],
+        custom: {
+          textSize: { type: "float", value: 80 },
+        }
+      },
+      bio: {
+        alpha: 0,
+        start: ['parent', 'start'],
+        top: ['avatar', 'bottom', 16],
+        end: ['parent', 'end', 0],
+      },
+      social: {
+        start: ['avatar', 'start'],
+        top: ['avatar', 'bottom', 8],
+      }
+    }
+  },
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      pathMotionArc: 'toggle',
+      KeyFrames: {
+        KeyAttributes: [{
+          alpha: [0.5],
+          frames: [50],
+          target: 'imageView',
+          transitionEasing: 'decelerate',
+        }],
+      }
+    },
+  }
+}

@@ -1,8 +1,6 @@
 package com.example.tobjobs.di
 
-import com.example.cv.LoginRepoImpl
-import com.example.tobjobs.LoginRepository
-import com.example.tobjobs.Service
+import com.example.tobjobs.NetWorkService.Service
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -24,12 +22,15 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun getApiService(gson: Gson):Service{
+    fun getTopJobsRetrofit(gson: Gson):Retrofit{
         return Retrofit.Builder().baseUrl("https://tuyendungbackend.onrender.com")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build().create(Service::class.java)
+            .addConverterFactory(GsonConverterFactory.create(gson)).build()
+    }
+    @Singleton
+    @Provides
+    fun getApiService(retrofit: Retrofit): Service {
+        return retrofit.create(Service::class.java)
     }
 
-    @Provides
-    fun provideLoginRepo(loginImpl: LoginRepoImpl): LoginRepository = loginImpl
+
 }

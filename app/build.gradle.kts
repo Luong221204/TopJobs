@@ -63,6 +63,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -83,6 +87,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     implementation ("com.google.accompanist:accompanist-insets:0.17.0")
 
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.9.0")
+
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
 
     implementation(libs.retrofit)
     implementation(kotlin("script-runtime"))
