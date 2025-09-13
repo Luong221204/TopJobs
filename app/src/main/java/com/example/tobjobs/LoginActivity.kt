@@ -39,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -69,6 +70,7 @@ import com.example.tobjobs.Viewmodel.LoginViewModel
 import com.example.tobjobs.Viewmodel.isValidEmail
 import com.example.tobjobs.Viewmodel.isValidPassword
 import com.example.tobjobs.ui.theme.Green40
+import com.example.tobjobs.ui.theme.TopJobsTheme
 import com.example.tobjobs.ui.theme.rounded
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -93,17 +95,20 @@ class LoginActivity : BaseActivity() {
         }
 
         setContent {
-            LoginScreen(viewmodel,::onMainActivity) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Spacer(modifier = Modifier.height(54.dp))
-                    Logo(imeVisible,"Đăng nhập"){
-                        LoginForm(modifier =it ,viewmodel){
-                            val intent = Intent(this@LoginActivity,RegisterActivity::class.java)
-                            startActivity(intent)
+            TopJobsTheme{
+                LoginScreen(viewmodel,::onMainActivity) {
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        Spacer(modifier = Modifier.height(TopJobsTheme.fourFoldDimension.v14))
+                        Logo(imeVisible, stringResource(R.string.login)){
+                            LoginForm(modifier =it ,viewmodel){
+                                val intent = Intent(this@LoginActivity,RegisterActivity::class.java)
+                                startActivity(intent)
+                            }
                         }
                     }
                 }
             }
+
 
         }
     }
@@ -144,7 +149,7 @@ fun LoginForm(modifier: Modifier,viewModel: LoginViewModel,onRequestedToRegister
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = TopJobsTheme.fourFoldDimension.v8),
     ) {
         val (emailRef,passwordRef,forgot,login,line) = createRefs()
         Email(
@@ -188,8 +193,8 @@ fun LoginForm(modifier: Modifier,viewModel: LoginViewModel,onRequestedToRegister
             viewModel.onPasswordChange(it)
         }
         Text(
-            text = "Quên mật khẩu",
-            style = TextStyle(fontSize = 15.sp, color =  colorResource(R.color.green)),
+            text = stringResource(R.string.forgot_password),
+            style = TopJobsTheme.appTypoTheme.primary,
             modifier = Modifier.constrainAs(forgot){
                 top.linkTo(passwordRef.bottom,16.dp)
                 end.linkTo(passwordRef.end)
@@ -205,7 +210,7 @@ fun LoginForm(modifier: Modifier,viewModel: LoginViewModel,onRequestedToRegister
                     end.linkTo(parent.end)
                     start.linkTo(parent.start)
                 }
-                .height(56.dp),
+                .height(TopJobsTheme.fourFoldDimension.v14),
             shape = RoundedCornerShape(rounded),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Green40,
@@ -213,11 +218,13 @@ fun LoginForm(modifier: Modifier,viewModel: LoginViewModel,onRequestedToRegister
             ),
         ) {
             Text(
-                text = "Đăng nhập",
-                color = Color.White
+                text =  stringResource(R.string.login),
+                style = TopJobsTheme.appTypoTheme.buttonStyle
             )
         }
-        Line("Hoặc đăng nhập bằng", modifier = Modifier
+        Line(
+            text = stringResource(R.string.or_login_with),
+            modifier = Modifier
             .constrainAs(line) {
                 top.linkTo(login.bottom, 24.dp)
                 end.linkTo(parent.end)
@@ -240,34 +247,26 @@ fun LoginForm(modifier: Modifier,viewModel: LoginViewModel,onRequestedToRegister
             Image(
                 painter = painterResource(R.drawable.facebook),
                 contentDescription = null,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(TopJobsTheme.fourFoldDimension.v12)
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(TopJobsTheme.fourFoldDimension.v4))
             Image(
                 painter = painterResource(R.drawable.google),
                 contentDescription = null,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(TopJobsTheme.fourFoldDimension.v12)
             )
         }
 
         Text( text = buildAnnotatedString {
             withStyle(
-                style = SpanStyle(
-                    fontSize = 14.sp,
-                    color = Color.Black.copy(alpha = 0.2f),
-                )
+                style = TopJobsTheme.appTypoTheme.spanStylePrimaryFade
             ){
-                append("Chưa có tài khoản?  ")
+                append(stringResource(R.string.no_account))
             }
             withStyle(
-                style = SpanStyle(
-                    fontSize = 14.sp,
-                    color = Green40,
-                    fontWeight = FontWeight.Bold
-
-                )
+                style = TopJobsTheme.appTypoTheme.spanStyleSecondaryExtra
             ){
-                append("Đăng ký ngay")
+                append(stringResource(R.string.sign_up_now))
             }
 
         },

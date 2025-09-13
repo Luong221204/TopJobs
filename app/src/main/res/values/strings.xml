@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">TobJobs</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="no_account">"Chưa có tài khoản? "</string>
+    <string name="sign_up_now">Đăng ký ngay</string>
+    <string name="or_login_with">Hoặc đăng nhập bằng</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="agreement_prefix">"Tôi đã đọc và đồng ý với "</string>
+    <string name="terms_of_use">Điều khoản sử dụng</string>
+    <string name="privacy_policy">Chính sách bảo mật</string>
+    <string name="welcome_message">Chào mừng bạn đến với TopJobs</string>
+    <string name="password_requirement">Mật khẩu phải có ít nhất 8 ký tự</string>
+    <string name="confirm_password">Nhập lại mật khẩu của bạn</string>
+    <string name="name_request">Chúng tôi cần bạn cung cấp tên</string>
+    <string name="full_name_hint">Nhập họ và tên đầy đủ</string>
+    <string name="password_hint">Nhập mật khẩu của bạn</string>
+    <string name="password">Mật khẩu</string>
+    <string name="invalid_email">Email không hợp lệ</string>
+    <string name="email_example">example@email.com</string>
+    <string name="email">Email</string>
+    <string name="have_account_already">"Bạn đã có tài khoản? "</string>
+    <string name = "sign_in_now">Đăng nhập ngay</string>
+    <string name="and">" và "</string>
+
 </resources>

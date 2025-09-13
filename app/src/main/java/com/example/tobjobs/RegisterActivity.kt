@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -64,6 +65,7 @@ import com.example.tobjobs.Viewmodel.RegisterViewmodel
 import com.example.tobjobs.Viewmodel.isValidEmail
 import com.example.tobjobs.Viewmodel.isValidPassword
 import com.example.tobjobs.ui.theme.Green40
+import com.example.tobjobs.ui.theme.TopJobsTheme
 import com.example.tobjobs.ui.theme.rounded
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -89,7 +91,7 @@ class RegisterActivity : BaseActivity() {
             RegisterScreen(viewmodel,::onMainActivity) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Spacer(modifier = Modifier.height(54.dp))
-                    Logo(imeVisible,"Đăng kí"){
+                    Logo(imeVisible, stringResource(R.string.register)){
                         RegisterForm(modifier =it ,viewmodel)
                     }
                 }
@@ -227,36 +229,38 @@ fun RegisterForm(modifier: Modifier,viewmodel:RegisterViewmodel) {
                 )
             )
             val annotatedText = buildAnnotatedString {
-                append("Tôi đã đọc và đồng ý với ")
+                withStyle(style = TopJobsTheme.appTypoTheme.spanStylePrimary){
+                    append(stringResource(R.string.agreement_prefix))
+
+                }
 
                 // Chữ "Google"
-                pushStringAnnotation(tag = "Điều khoản sử dụng", annotation = "https://www.google.com")
-                withStyle(style = SpanStyle(color = Green40)) {
-                    append("Điều khoản sử dụng")
+                pushStringAnnotation(tag = stringResource(R.string.terms_of_use), annotation = "https://www.google.com")
+                withStyle(style = TopJobsTheme.appTypoTheme.spanStyleSecondary) {
+                    append(stringResource(R.string.terms_of_use))
                 }
                 pop()
+                append(stringResource(R.string.and))
 
-                append(" và ")
-
-                // Chữ "Facebook"
-                pushStringAnnotation(tag = "Chính sách bảo mật", annotation = "https://www.facebook.com")
-                withStyle(style = SpanStyle(color = Green40)) {
-                    append("Chính sách bảo mật")
+                pushStringAnnotation(tag =stringResource(R.string.privacy_policy), annotation = "https://www.facebook.com")
+                withStyle(style = TopJobsTheme.appTypoTheme.spanStyleSecondary) {
+                    append(stringResource(R.string.privacy_policy))
                 }
                 pop()
             }
 
+            val context = LocalContext.current
             ClickableText(
                 text = annotatedText,
                 onClick = { offset ->
-                    annotatedText.getStringAnnotations(tag = "GOOGLE", start = offset, end = offset)
+                    annotatedText.getStringAnnotations(tag = context.getString(R.string.terms_of_use), start = offset, end = offset)
                         .firstOrNull()?.let {
-                            Log.d("DUCLUONG","Click vào Google → ${it.item}")
+                           // xử lí bấm vào điều khoản sử dụng
                         }
 
-                    annotatedText.getStringAnnotations(tag = "FACEBOOK", start = offset, end = offset)
+                    annotatedText.getStringAnnotations(tag = context.getString(R.string.terms_of_use), start = offset, end = offset)
                         .firstOrNull()?.let {
-                            Log.d("DUCLUONG","Click vào Face → ${it.item}")
+                            // xử lí bấm vào chính sách bảo mật
                         }
                 },
             )
@@ -270,7 +274,7 @@ fun RegisterForm(modifier: Modifier,viewmodel:RegisterViewmodel) {
                 top.linkTo(policy.bottom,20.dp)
                 end.linkTo(parent.end)
                 start.linkTo(parent.start)
-            }.height(56.dp),
+            }.height(TopJobsTheme.fourFoldDimension.v14),
             shape = RoundedCornerShape(rounded),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Green40,
@@ -278,8 +282,8 @@ fun RegisterForm(modifier: Modifier,viewmodel:RegisterViewmodel) {
             ),
         ) {
             Text(
-                text = "Đăng ký",
-                color = Color.White
+                text = stringResource(R.string.register),
+                style = TopJobsTheme.appTypoTheme.buttonStyle
             )
         }
 
@@ -288,22 +292,14 @@ fun RegisterForm(modifier: Modifier,viewmodel:RegisterViewmodel) {
 
         Text( text = buildAnnotatedString {
             withStyle(
-                style = SpanStyle(
-                    fontSize = 14.sp,
-                    color = Color.Black.copy(alpha = 0.2f),
-                )
+                style = TopJobsTheme.appTypoTheme.spanStylePrimaryFade
             ){
-                append("Bạn đã có tài khoản?  ")
+                append(stringResource(R.string.have_account_already))
             }
             withStyle(
-                style = SpanStyle(
-                    fontSize = 14.sp,
-                    color = Green40,
-                    fontWeight = FontWeight.Bold
-
-                )
+                style = TopJobsTheme.appTypoTheme.spanStyleSecondaryExtra
             ){
-                append("Đăng nhập ngay")
+                append(stringResource(R.string.sign_in_now))
             }
 
         },

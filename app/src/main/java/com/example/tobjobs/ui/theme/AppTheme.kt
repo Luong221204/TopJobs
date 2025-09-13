@@ -4,9 +4,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.room.PrimaryKey
+import com.example.tobjobs.R
 
 
 data class Alpha(
@@ -57,7 +64,7 @@ data class IconSizeDimension(
 
 data class Color(
     val BlackFade: Color = Color.Black.copy(0.2f),
-    val Error:Color = Color.Red,
+    val Error:Color = Errors
 )
 data class ThinDimension(
     val t1: Dp = 0.5.dp,
@@ -104,13 +111,60 @@ data class RoundedCornerDimension(
 
 data class AppTypoTheme(
     val logoStyle :TextStyle = TextStyle(
+    ),
+    val primary:TextStyle = TextStyle(
+        fontSize = 15.sp,
+        color =  Green40,
+        fontFamily = Roboto
+        ),
+    val buttonStyle:TextStyle = TextStyle(
+        color = Color.White,
+        fontFamily = Roboto,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold
+    ),
+    val labelStyle:TextStyle  = TextStyle(
+        fontSize = 14.sp,
+        fontFamily = Roboto,
+        color = Teal200
+    ),
+    val placeholderStyle:TextStyle  = TextStyle(
+        fontSize = 14.sp,
+        fontFamily = Roboto,
+        color = Color.Black.copy(0.2f)
+    ),
+    val inValidStyle:TextStyle  = TextStyle(
+        fontSize = 13.sp,
+        fontFamily = Roboto,
+        color = Errors
+    ),
+    val spanStylePrimary: SpanStyle = SpanStyle(
+        fontSize = 14.sp,
+        color = Color.Black,
+        fontFamily = Roboto
+    ),
+    val spanStyleSecondary: SpanStyle = SpanStyle(
+        fontSize = 14.sp,
+        color = Green40,
+        fontFamily = Roboto
+    ),
 
-    )
+    val spanStylePrimaryFade: SpanStyle = SpanStyle(
+        fontFamily = Roboto,
+        fontSize = 14.sp,
+        color = Color.Black.copy(0.2f),
+    ),
+    val spanStyleSecondaryExtra: SpanStyle = SpanStyle(
+        fontSize = 14.sp,
+        color = Green40,
+        fontFamily = Roboto,
+        fontWeight = FontWeight.Bold
+    ),
 
 )
 val LocalAlpha = staticCompositionLocalOf { Alpha() }
 val LocalIconSize = staticCompositionLocalOf { IconSizeDimension() }
-
+val LocalAppTypo = staticCompositionLocalOf { AppTypoTheme() }
 val LocalRoundedDp = staticCompositionLocalOf { RoundedCornerDimension() }
 val LocalBlockDp = staticCompositionLocalOf { BlockDimension() }
 val LocalThinDp = staticCompositionLocalOf { ThinDimension() }

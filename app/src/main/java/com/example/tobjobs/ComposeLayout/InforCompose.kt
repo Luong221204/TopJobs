@@ -44,7 +44,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -67,6 +69,8 @@ import com.example.tobjobs.ui.theme.Changa_one
 import com.example.tobjobs.ui.theme.Green40
 import com.example.tobjobs.ui.theme.Green405
 import com.example.tobjobs.ui.theme.Green408
+import com.example.tobjobs.ui.theme.Roboto
+import com.example.tobjobs.ui.theme.Teal200
 import com.example.tobjobs.ui.theme.TobJobsTheme
 import com.example.tobjobs.ui.theme.TopJobsTheme
 import com.example.tobjobs.ui.theme.rounded
@@ -92,8 +96,18 @@ fun Email(
             shape = RoundedCornerShape(rounded),
             value = text,
             onValueChange = { onValueTextChange(it) },
-            label = { Text("Email") },
-            placeholder = { Text("example@email.com", color = TopJobsTheme.color.BlackFade) },
+            label = {
+                Text(
+                    text = stringResource(R.string.email),
+                    style = TopJobsTheme.appTypoTheme.labelStyle
+                )
+                    },
+            placeholder = {
+                Text(
+                    stringResource(R.string.email_example),
+                    style = TopJobsTheme.appTypoTheme.placeholderStyle
+                )
+                          },
             singleLine = true,
             leadingIcon = {
                 if(isWarning){
@@ -101,12 +115,12 @@ fun Email(
                         painter = painterResource(R.drawable.warning),
                         contentDescription = null,
                         modifier = Modifier.size(TopJobsTheme.iconSize.outLineTextIconSize),
-                        colorFilter = ColorFilter.tint(color = Color.Red)
+                        colorFilter = ColorFilter.tint(color = TopJobsTheme.color.Error)
                     )
                 }else{
                     Icon(
                         imageVector = Icons.Default.Email,
-                        contentDescription = "Email Icon",
+                        contentDescription = null,
                         tint = Green40
                     )
                 }
@@ -115,21 +129,27 @@ fun Email(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Green408,
                 unfocusedBorderColor = Green405,
-                errorBorderColor = Color.Red
+                errorBorderColor = TopJobsTheme.color.Error
             ),
             isError = isWarning,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            modifier = Modifier.fillMaxWidth().onFocusEvent {
-                if(isFirstPressed){
-                    onFocus(it.isFocused)
-                }else {
-                    if(it.isFocused) isFirstPressed=true
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusEvent {
+                    if (isFirstPressed) {
+                        onFocus(it.isFocused)
+                    } else {
+                        if (it.isFocused) isFirstPressed = true
+                    }
                 }
-            }
         )
         Spacer( modifier= Modifier.height(if(isWarning) TopJobsTheme.fourFoldDimension.v2 else  TopJobsTheme.fourFoldDimension.v0))
-        Text("Email không hợp lệ",modifier= Modifier.height(if(isWarning) height.dp else TopJobsTheme.fourFoldDimension.v0) )
+        Text(
+            stringResource(R.string.invalid_email),
+            style = TopJobsTheme.appTypoTheme.inValidStyle,
+            modifier= Modifier.height(if(isWarning) height.dp else TopJobsTheme.fourFoldDimension.v0)
+        )
     }
 
 
@@ -153,8 +173,18 @@ fun Password(
             shape = RoundedCornerShape(rounded),
             value = text,
             onValueChange = { onValueTextChange(it) },
-            label = { Text("Mật khẩu") },
-            placeholder = { Text("Nhập mật khẩu của bạn", color = TopJobsTheme.color.BlackFade) },
+            label = {
+                Text(
+                    stringResource(R.string.password),
+                    style = TopJobsTheme.appTypoTheme.labelStyle
+                )
+                    },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.password_hint),
+                    style = TopJobsTheme.appTypoTheme.placeholderStyle
+                )
+                          },
             singleLine = true,
             leadingIcon = {
                 if(isWarning){
@@ -178,8 +208,11 @@ fun Password(
                     painter = if(isPasswordVisible) painterResource(R.drawable.hide) else painterResource(
                         R.drawable.show
                     ),
+                    colorFilter = ColorFilter.tint(color = Green40),
                     contentDescription = null,
-                    modifier = Modifier.size(TopJobsTheme.iconSize.outLineTextIconTrailingSize).clickable { isPasswordVisible = !isPasswordVisible }
+                    modifier = Modifier
+                        .size(TopJobsTheme.iconSize.outLineTextIconTrailingSize)
+                        .clickable { isPasswordVisible = !isPasswordVisible }
                 )
 
             },
@@ -193,17 +226,22 @@ fun Password(
             else PasswordVisualTransformation(),
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            modifier = Modifier.fillMaxWidth().onFocusEvent {
-                if(isFirstPressed){
-                    onFocus(it.isFocused)
-                }else {
-                    if(it.isFocused) isFirstPressed=true
-                }
-            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusEvent {
+                    if (isFirstPressed) {
+                        onFocus(it.isFocused)
+                    } else {
+                        if (it.isFocused) isFirstPressed = true
+                    }
+                },
             interactionSource = interactionSource
         )
         Spacer( modifier= Modifier.height(if(isWarning) space.dp else 0.dp))
-        Text("Mật khẩu phải có ít nhất 8 ký tự",modifier= Modifier.height(if(isWarning) height.dp else 0.dp) )
+        Text(
+            text = stringResource(R.string.password_requirement),
+            style = TopJobsTheme.appTypoTheme.inValidStyle,
+            modifier= Modifier.height(if(isWarning) height.dp else 0.dp) )
     }
 
 
@@ -225,8 +263,18 @@ fun Name(
             shape = RoundedCornerShape(rounded),
             value = text,
             onValueChange = { onValueTextChange(it) },
-            label = { Text("Nhập họ và tên đầy đủ") },
-            placeholder = { Text("Nhập họ và tên đầy đủ", color = TopJobsTheme.color.BlackFade) },
+            label = {
+                Text(
+                    text = stringResource(R.string.full_name_hint),
+                    style = TopJobsTheme.appTypoTheme.labelStyle,
+                )
+                    },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.full_name_hint),
+                    style= TopJobsTheme.appTypoTheme.placeholderStyle
+                )
+                          },
             singleLine = true,
             leadingIcon = {
                 if(isWarning){
@@ -253,16 +301,22 @@ fun Name(
             isError = isWarning,
             keyboardOptions = keyboardOptions ,
             keyboardActions = keyboardActions,
-            modifier = Modifier.fillMaxWidth().onFocusEvent {
-                if(isFirstPressed){
-                    onFocus(it.isFocused)
-                }else {
-                    if(it.isFocused) isFirstPressed=true
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusEvent {
+                    if (isFirstPressed) {
+                        onFocus(it.isFocused)
+                    } else {
+                        if (it.isFocused) isFirstPressed = true
+                    }
                 }
-            }
         )
         Spacer( modifier= Modifier.height(if(isWarning) space.dp else 0.dp))
-        Text("Chúng tôi cần bạn cung cấp tên ",modifier= Modifier.height(if(isWarning) height.dp else 0.dp) )
+        Text(
+            text = stringResource(R.string.name_request),
+            style = TopJobsTheme.appTypoTheme.inValidStyle
+            ,modifier= Modifier.height(if(isWarning) height.dp else 0.dp)
+        )
     }
 
 }
@@ -283,8 +337,18 @@ fun PasswordAgain(
             shape = RoundedCornerShape(rounded),
             value = text,
             onValueChange = { onValueTextChange(it) },
-            label = { Text("Mật khẩu") },
-            placeholder = { Text("Nhập lại mật khẩu của bạn", color = TopJobsTheme.color.BlackFade) },
+            label = {
+                Text(
+                    text = stringResource(R.string.confirm_password),
+                    style = TopJobsTheme.appTypoTheme.labelStyle
+                )
+                    },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.confirm_password),
+                    style = TopJobsTheme.appTypoTheme.placeholderStyle
+                )
+                          },
             singleLine = true,
             leadingIcon = {
                 if(isWarning){
@@ -308,9 +372,13 @@ fun PasswordAgain(
                     painter = if(isPasswordVisible) painterResource(R.drawable.hide) else painterResource(
                         R.drawable.show
                     ),
+                    colorFilter = ColorFilter.tint(color = Green40),
                     contentDescription = null,
-                    modifier = Modifier.size(TopJobsTheme.iconSize.outLineTextIconTrailingSize).clickable { isPasswordVisible = !isPasswordVisible
-                    }
+                    modifier = Modifier
+                        .size(TopJobsTheme.iconSize.outLineTextIconTrailingSize)
+                        .clickable {
+                            isPasswordVisible = !isPasswordVisible
+                        }
                 )
 
             },
@@ -324,16 +392,21 @@ fun PasswordAgain(
             else PasswordVisualTransformation(),
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            modifier = Modifier.fillMaxWidth().onFocusEvent {
-                if(isFirstPressed){
-                    onFocus(it.isFocused)
-                }else {
-                    if(it.isFocused) isFirstPressed=true
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusEvent {
+                    if (isFirstPressed) {
+                        onFocus(it.isFocused)
+                    } else {
+                        if (it.isFocused) isFirstPressed = true
+                    }
                 }
-            }
         )
         Spacer( modifier= Modifier.height(if(isWarning) space.dp else 0.dp))
-        Text("Mật khẩu phải có ít nhất 8 ký tự ",modifier= Modifier.height(if(isWarning) height.dp else 0.dp) )
+        Text(
+            text = stringResource(R.string.password_requirement),
+            style = TopJobsTheme.appTypoTheme.inValidStyle,
+            modifier= Modifier.height(if(isWarning) height.dp else 0.dp) )
     }
 
 }
@@ -344,47 +417,50 @@ fun Line(
     text: String,
     modifier: Modifier = Modifier
 ) {
-    ConstraintLayout(
-        modifier = modifier.fillMaxWidth()
-    ) {
-        val (left, title, right) = createRefs()
+    TopJobsTheme {
+        ConstraintLayout(
+            modifier = modifier.fillMaxWidth()
+        ) {
+            val (left, title, right) = createRefs()
 
-        Text(
-            text = text,
-            color = Color.Black.copy(alpha = 0.2f),
-            modifier = Modifier.constrainAs(title) {
-                centerHorizontallyTo(parent)
-                top.linkTo(parent.top)
-            }
-        )
-
-        Box(
-            modifier = Modifier
-                .constrainAs(left) {
-                    top.linkTo(title.top)
-                    bottom.linkTo(title.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(title.start, 8.dp)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.value(1.dp)
+            Text(
+                text = text,
+                color = TopJobsTheme.color.BlackFade,
+                modifier = Modifier.constrainAs(title) {
+                    centerHorizontallyTo(parent)
+                    top.linkTo(parent.top)
                 }
-                .background(Color.Gray.copy(alpha = 0.2f))
-        )
+            )
 
-        // Line bên phải
-        Box(
-            modifier = Modifier
-                .constrainAs(right) {
-                    top.linkTo(title.top)
-                    bottom.linkTo(title.bottom)
-                    start.linkTo(title.end, 8.dp)
-                    end.linkTo(parent.end)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.value(1.dp)
-                }
-                .background(Color.Gray.copy(alpha = 0.2f))
-        )
+            Box(
+                modifier = Modifier
+                    .constrainAs(left) {
+                        top.linkTo(title.top)
+                        bottom.linkTo(title.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(title.start, 8.dp)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.value(1.dp)
+                    }
+                    .background(Color.Gray.copy(alpha = 0.2f))
+            )
+
+            // Line bên phải
+            Box(
+                modifier = Modifier
+                    .constrainAs(right) {
+                        top.linkTo(title.top)
+                        bottom.linkTo(title.bottom)
+                        start.linkTo(title.end, 8.dp)
+                        end.linkTo(parent.end)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.value(1.dp)
+                    }
+                    .background(Color.Gray.copy(alpha = 0.2f))
+            )
+        }
     }
+
 }
 @OptIn(ExperimentalMotionApi::class)
 @Composable
@@ -415,7 +491,9 @@ fun Logo(
     MotionLayout(
         motionScene = motionScene1,
         progress = progress,
-        modifier = Modifier.fillMaxSize().background(color = Color.White)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
     ){
         val props_app = customProperties("app_name")
         val fontSize_app = props_app.float("fontSize") ?: 16f
@@ -437,7 +515,7 @@ fun Logo(
             withStyle(
                 style = SpanStyle(
                     fontSize = fontSize_app.sp,
-                    fontFamily = Open_sans,
+                    fontFamily = Roboto,
                     color = colorResource(R.color.green),
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -449,16 +527,19 @@ fun Logo(
             modifier = Modifier.layoutId("app_name"),
             textAlign = TextAlign.Center
         )
-        Text(text = "Chào mừng bạn đén với TopJobs", fontSize = fontSize_slogan.sp,
-            fontFamily = Open_sans,
+        Text(text = "Chào mừng bạn đến với TopJobs",
+            fontSize = fontSize_slogan.sp,
+            fontFamily = Roboto,
             textAlign = TextAlign.Center,
-
-            modifier = Modifier.layoutId("slogan"))
-        Text(text = title, fontSize = fontSize_title.sp,
-            fontFamily = Open_sans,
+            modifier = Modifier.layoutId("slogan")
+        )
+        Text(text = title,
+            fontSize = fontSize_title.sp,
+            fontFamily = Roboto,
             textAlign = TextAlign.Center,
-
-            modifier = Modifier.layoutId("title").clickable {})
+            modifier = Modifier
+                .layoutId("title")
+                .clickable {})
         content(Modifier.layoutId("nested"))
     }
 

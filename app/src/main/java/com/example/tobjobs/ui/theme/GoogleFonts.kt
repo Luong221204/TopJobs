@@ -1,6 +1,7 @@
 package com.example.tobjobs.ui.theme
 
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import com.example.tobjobs.R
@@ -26,7 +27,9 @@ val Open_sans = FontFamily(
 // kiểu Roboto
 val roboto = GoogleFont("Roboto")
 val Roboto = FontFamily(
-    Font(googleFont = roboto, fontProvider = provider)
+    Font(googleFont = roboto, fontProvider = provider, weight = FontWeight.Normal),
+    Font(googleFont = roboto, fontProvider = provider, weight = FontWeight.Medium),
+    Font(googleFont = roboto, fontProvider = provider, weight = FontWeight.Bold)
 )
 
 // kiểu Montserrat
